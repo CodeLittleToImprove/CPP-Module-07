@@ -9,7 +9,7 @@ _data(NULL), _size(0)
 
 }
 
-// Parameterized Constructor
+// Parameterized constructor
 template <typename T>
 Array<T>::Array(unsigned int n)
 	:_data(new T[n]), _size(n)
@@ -17,6 +17,7 @@ Array<T>::Array(unsigned int n)
 
 }
 
+// Copy constructor
 template <typename T>
 Array<T>::Array(const Array &other)
 	:_data(new T[other._size]), _size(other._size)
@@ -25,6 +26,7 @@ Array<T>::Array(const Array &other)
 		_data[i] = other._data[i];
 }
 
+// Assignment constructor
 template <typename T>
 Array<T> &Array<T>::operator=(const Array &other)
 {
@@ -70,5 +72,5 @@ unsigned int Array<T>::size() const
 template <typename T>
 const char *Array<T>::OutOfBoundsException::what() const throw()
 {
-	return ("Index out of bounds");
+	return ("Index out of bounds \n");
 }

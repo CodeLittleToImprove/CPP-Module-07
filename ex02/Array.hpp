@@ -24,13 +24,12 @@ class Array
 		class OutOfBoundsException : public std::exception
 		{
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
-// When you define a template class, the compiler needs to see both:
-// The declaration and
-// the implementation of all member functions
-
 
 };
 
+// When you define a template class, the compiler needs to see both:
+// The declaration and
+// the implementation of all member functions
 # include "Array.tpp"
