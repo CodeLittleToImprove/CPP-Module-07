@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Template.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbui-quo <tbui-quo@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/10 17:59:16 by tbui-quo          #+#    #+#             */
+/*   Updated: 2025/09/19 16:03:39 by tbui-quo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 
 # include <iostream>
@@ -6,14 +18,13 @@
 template <typename T>
 void printElement(const T &elem)
 {
-	std::cout << elem << std::endl;
+	std::cout << elem << " ";
 }
 
 template <typename T>
 void increaseElement(T &elem)
 {
 	++elem;
-	// std::cout << elem << std::endl;
 }
 
 // Version A – fully generic callable
@@ -37,10 +48,11 @@ void iterB(T *arr, size_t length, void (*f)(T&))
 }
 
 // Example demonstrating why Version A is more flexible: it can accept functor objects
+// advantage functor can store data inside of it
 struct Increment
 {
 	template <typename T>
-	void operator()(T &x)
+	void operator()(T &x) //
 	{
 		++x;
 	}

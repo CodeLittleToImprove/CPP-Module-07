@@ -12,6 +12,7 @@
 
 #include "Template.hpp"
 
+// helper function to test
 void toUpperCaseChar(char &c)
 {
 	c = static_cast<char>(toupper(c));
@@ -34,56 +35,64 @@ int main()
 
 	std::cout << "\033[1;35m===[Capitalize char array]===\033[0m" << std::endl;
 	std::cout << "original:\t";
-	for (char c : characters) std::cout << c << " ";
-	std::cout << std::endl;
+	for (int i = 0; i < 5; i++)
+		std::cout << characters[i] << " ";
 	iter(characters, 5, toUpperCaseChar);
-	std::cout << "iter result:\t";
-	for (char c : characters) std::cout << c << " ";
-	std::cout << std::endl;
+	// via alternative B
 	// iterB(characters, 5, toUpperCaseChar);
+	std::cout << "\niter result:\t";
+	for (int i = 0; i < 5; i++)
+		std::cout << characters[i] << " ";
 
 	std::cout << std::endl << "\033[1;35m===[Capitalize std::string array]===\033[0m" << std::endl;
 	std::cout << "original:\t";
-	for (std::string &s : str) std::cout << s << " ";
-	std::cout << std::endl;
+	for (long unsigned int i = 0; i < str->size(); i++)
+		std::cout << str[i] << " ";
 	iter(str, 4, toUpperCaseString);
-	std::cout << "iter result:\t";
-	for (std::string &s : str) std::cout << s << " ";
-	std::cout << std::endl;
 	// iterB(str, 4, toUpperCaseString);
+	std::cout << "\niter result:\t";
+	for (long unsigned int i = 0; i < str->size(); i++)
+		std::cout << str[i] << " ";
+	std::cout << std::endl;
 
 	std::cout << "\n\033[1;35m===[Print Int array]===\033[0m" << std::endl;
 	iter(numbers, 5, printElement<int>);
+	std::cout << std::endl;
 
 	std::cout << "\n\033[1;35m===[Print Const Int array]===\033[0m" << std::endl;
-	iter(const_numbers, 3, printElement<int>); // prints const array
-
+	iter(const_numbers, 3, printElement<int>);
+	std::cout << std::endl;
 
 	std::cout << "\n\033[1;35m===[Increase Element in int array]===\033[0m" << std::endl;
 	std::cout << "original:\t";
-	for (int i : numbers) std::cout << i << " ";
+	for (int i = 0; i < 5; i++)
+		std::cout << numbers[i] << " ";
 	iter(numbers, 5, increaseElement<int>);
 	std::cout << std::endl << "iter result:\t";
-	for (int i : numbers) std::cout << i << " ";
+	for (int i = 0; i < 5; i++)
+		std::cout << numbers[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << std::endl << "\033[1;35m===[Increase characters using instantiated template]===\033[0m" << std::endl;
+	std::cout << "original:\t";
+	for (int i = 0; i < 5; i++)
+		std::cout << characters[i] << " ";
+	iter(characters, 5, increaseElement<char>);
+	std::cout << "\niter result:\t";
+	for (int i = 0; i < 5; i++)
+		std::cout << characters[i] << " ";
 
 	std::cout << std::endl << std::endl <<"\033[1;35m===[Increase numbers using a functor (Version A advantage)]===\033[0m" << std::endl;
 	// advantage of version A
 	std::cout << "original:\t";
-	for (int i : numbers) std::cout << i << " ";
+	for (int i = 0; i < 5; i++)
+		std::cout << numbers[i] << " ";
 	Increment incFunction;
 	iter(numbers, 5, incFunction);
+	// iterB(numbers, 5, incFunction); // can't use an object as function
 	std::cout << std::endl << "iter result:\t";
-	for (int i : numbers) std::cout << i << " ";
-	// iterB(numbers, 5, inc); // can't use an object as function
-
-	std::cout << std::endl << "\033[1;35m===[Increase characters using instantiated template]===\033[0m" << std::endl;
-	std::cout << "original:\t";
-	for (char c : characters) std::cout << c << " ";
+	for (int i = 0; i < 5; i++)
+		std::cout << numbers[i] << " ";
 	std::cout << std::endl;
-	iter(characters, 5, increaseElement<char>); // increases prints const array
-	std::cout << "iter result:\t";
-	for (char c : characters) std::cout << c << " ";
-	std::cout << std::endl;
-
 	return 0;
 }

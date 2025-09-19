@@ -1,5 +1,4 @@
 #pragma once
-// #include "Array.hpp"
 
 // Default constructor
 template <typename T>

@@ -37,22 +37,29 @@ void printColor(const std::string &msg, Color::Code color)
 }
 
 // Struct for test "Complex Array Type from own struct"
-struct s_test {
+struct s_test
+{
 	int a;
 	char b;
 };
+
+// overload for printing s_test stuff
+std::ostream& operator<<(std::ostream& os, const s_test& obj)
+{
+	os << "{a: " << obj.a << ", b: " << obj.b << "}";
+	return os;
+}
 
 template <typename T>
 void printOwnArray(const Array<T>& arr)
 {
 	if (arr.size() == 0)
 	{
-		std::cout << "empty array from own print function" << std::endl;
+		// std::cout << "debug print empty array from own print function" << std::endl;
 		return;
 	}
 
 	for (unsigned int i = 0; i < arr.size(); i++)
-		// std::cout << arr[i] << " ";
 			std::cout << "'" << arr[i] << "' | ";
 	std::cout << std::endl;
 }
@@ -105,6 +112,7 @@ void test_invalid_index_access()
 		std::cout << std::endl;
 	}
 }
+
 void test_int_arg()
 {
 	Array<int> intArray1(5);
@@ -156,7 +164,7 @@ void test_double_arg()
 
 	printColor("set numbers with [] operator: ", Color::BLUE);
 	for (unsigned int i = 0; i < doubleArray1.size(); i++)
-		doubleArray1[i] = i * 1.1; // example double values
+		doubleArray1[i] = i * 1.1;
 
 	printOwnArray(doubleArray1);
 
@@ -251,7 +259,58 @@ void test_string_arg()
 	printOwnArray(strArray3);
 }
 
+void test_struct_arg()
+{
+	printColor("Create struct array with size 2 \n", Color::YELLOW);
+	Array<s_test> structArray1(2);
 
+	structArray1[0].a = 0;
+	structArray1[0].b = 'a';
+	structArray1[1].a = 1;
+	structArray1[1].b = 'b';
+
+	printOwnArray(structArray1);
+
+	printColor("structArray1.size: ", Color::BLUE);
+	std::cout << structArray1.size() << std::endl;
+
+	printColor("try access structArray1[1]: ", Color::BLUE);
+	std::cout << structArray1[1] << std::endl;
+
+	try
+	{
+		printColor("try access structArray1[2]: ", Color::BLUE);
+		std::cout << structArray1[2];
+	}
+	catch (const Array<s_test>::OutOfBoundsException &e)
+	{
+		printColor(e.what(), Color::RED);
+		std::cout << std::endl;
+	}
+
+	printColor("Copy array via copy constructor (deep copy test) \n", Color::YELLOW);
+	Array<s_test> structArray2(structArray1);
+
+	printColor("Modify structArray2[0].a = 42 \n", Color::BLUE);
+	structArray2[0].a = 42;
+
+	printColor("Print whole structArray1: ", Color::BLUE);
+	printOwnArray(structArray1);
+	printColor("Print whole structArray2: ", Color::BLUE);
+	printOwnArray(structArray2);
+
+	printColor("\nCopy array via assignment operator (deep copy test) \n", Color::YELLOW);
+	Array<s_test> structArray3;
+	structArray3 = structArray1;
+
+	printColor("Modify structArray3[1].b = 'z' \n", Color::BLUE);
+	structArray3[1].b = 'z';
+
+	printColor("Print whole structArray1: ", Color::BLUE);
+	printOwnArray(structArray1);
+	printColor("Print whole structArray3: ", Color::BLUE);
+	printOwnArray(structArray3);
+}
 
 int main(int, char**)
 {
@@ -269,6 +328,9 @@ int main(int, char**)
 
 	printColor("\n===[String Array tests]===\n", Color::BRIGHT_MAGENTA);
 	test_string_arg();
+
+	printColor("\n===[Struct Array tests]===\n", Color::BRIGHT_MAGENTA);
+	test_struct_arg();
 
 	return (0);
 }
