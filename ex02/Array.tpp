@@ -23,9 +23,14 @@ _data(NULL), _size(0)
 // Parameterized constructor
 template <typename T>
 Array<T>::Array(unsigned int n)
-	:_data(new T[n]), _size(n)
+	:_data(NULL), _size(0)
 {
-
+	if (n > std::numeric_limits<std::size_t>::max() / sizeof(T))
+	{
+		throw std::overflow_error("Array size too large to allocate");
+	}
+	_data = new T[n](); // () needed to initialize default datatypes to not have trash values
+	_size = n;
 }
 
 // Copy constructor

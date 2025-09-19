@@ -13,6 +13,7 @@
 #pragma once
 
 # include <iostream>
+# include <limits>
 # include <exception>
 
 template <typename T>
