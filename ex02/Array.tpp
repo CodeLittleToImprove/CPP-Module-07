@@ -25,10 +25,12 @@ template <typename T>
 Array<T>::Array(unsigned int n)
 	:_data(NULL), _size(0)
 {
-	if (n > std::numeric_limits<std::size_t>::max() / sizeof(T))
+	if (static_cast<std::size_t>(n) >
+		std::numeric_limits<std::size_t>::max() / sizeof(T))
 	{
 		throw std::overflow_error("Array size too large to allocate");
 	}
+
 	_data = new T[n](); // () needed to initialize default datatypes to not have trash values
 	_size = n;
 }
@@ -36,7 +38,7 @@ Array<T>::Array(unsigned int n)
 // Copy constructor
 template <typename T>
 Array<T>::Array(const Array &other)
-	:_data(new T[other._size]), _size(other._size)
+	:_data(new T[other._size]()), _size(other._size)
 {
 	for (unsigned int i = 0; i < _size; i++)
 		_data[i] = other._data[i];
@@ -50,7 +52,7 @@ Array<T> &Array<T>::operator=(const Array &other)
 	{
 		delete[] _data;
 		this->_size = other._size;
-		this->_data = new T[_size];
+		this->_data = new T[_size]();
 		for (unsigned int i = 0; i < _size; i++)
 			this->_data[i] = other._data[i];
 	}
